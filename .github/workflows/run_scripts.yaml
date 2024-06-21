@@ -49,8 +49,9 @@ jobs:
       run: |
         git config --global user.email ${{ secrets.GIT_EMAIL }}
         git config --global user.name ${{ secrets.GIT_USERNAME }}
-        git add R/*
-        git commit -m "Automated data update"
+        
+        git add .
+        git commit --allow-empty -m "Trigger Commit"
         git push
 
 
