@@ -45,10 +45,3 @@ packrat/init.R
 *.so
 *.dll
 
-# Other potential temporary files
-*~
-
-# Exclude data files that may contain sensitive information
-data/*.csv
-data/*.xlsx
-
