@@ -1,0 +1,56 @@
+# RStudio files
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+
+# R environment
+.Renvironment
+
+# R session files
+.rs.api/
+.suspended/
+
+# Logs
+*.Rout
+
+# R Markdown intermediate files
+.Rmd
+*_cache/
+*_files/
+
+# R build files
+.Rbuildignore
+.Rcheck/
+
+# Renv local library
+renv/library/
+renv/bin/
+renv/activate.R
+
+# renv snapshot file
+renv.lock
+
+# R Notebook files
+.nb.html
+
+# Packrat files
+packrat/lib/
+packrat/src/
+packrat/bundles/
+packrat/init.R
+
+# Compiled code
+*.o
+*.so
+*.dll
+
+# Other potential temporary files
+*~
+
+# Exclude data files that may contain sensitive information
+data/*.csv
+data/*.xlsx
+
+# Exclude plots directory
+plots/

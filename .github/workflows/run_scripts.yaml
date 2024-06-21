@@ -1,0 +1,35 @@
+name: R Data Analysis and Commit
+
+on:
+  schedule:
+    - cron: '0 */2 * * *'  # Runs at the start of every 2nd hour
+
+jobs:
+  analysis_and_commit:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install system dependencies for tidyverse
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libcurl4-openssl-dev libxml2-dev libssl-dev libicu-dev libblas-dev liblapack-dev zlib1g-dev
+
+    - name: Set up R
+      uses: r-lib/actions/setup-r@v1
+
+    - name: Install R packages
+      run: |
+        Rscript -e "install.packages(c('tidyverse', 'data.table', 'remotes'), repos = 'http://cran.rstudio.com')"
+        Rscript -e "remotes::install_github('dickoa/rhdx')"
+
+    - name: Run R script
+      run: Rscript run_data_set.R
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.email ${{ secrets.GIT_EMAIL }}
+        git config --global user.name ${{ secrets.GIT_USERNAME }}
+        git add data/*  # Add the output directory
+        git diff --quiet && git diff --staged --quiet || (git commit -m "Automated data update" and git push)
