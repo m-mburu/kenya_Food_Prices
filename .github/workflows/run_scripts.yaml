@@ -46,7 +46,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git config pull.rebase false
-          git pull origin master
+          git pull origin main
           date=$(date +'%Y-%m-%d')
           git add .
           git commit -m "automatic updates $date" || echo "Nothing to update"
