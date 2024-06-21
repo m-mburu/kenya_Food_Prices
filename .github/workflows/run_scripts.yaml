@@ -40,8 +40,10 @@ jobs:
       run: Rscript R/run_data_set.R
 
     - name: Commit and push changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
       run: |
         git config --global user.email ${{ secrets.GIT_EMAIL }}
         git config --global user.name ${{ secrets.GIT_USERNAME }}
-        git add data/* README.md  # Add the output directory and README.md
+        git add .  # Add the output directory and README.md
         git diff --quiet && git diff --staged --quiet || (git commit -m "Automated data update" && git push)
