@@ -39,7 +39,7 @@ jobs:
         Rscript -e "install.packages(c('rmarkdown'), repos = 'http://cran.rstudio.com')"
     
     - name: Run R script
-      run: Rscript R/run_data_set.R
+      run: Rscript R/job.R
 
     - name: Create changes
       uses: actions/checkout@v3
