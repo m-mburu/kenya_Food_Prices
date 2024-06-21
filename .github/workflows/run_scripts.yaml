@@ -42,10 +42,11 @@ jobs:
     - name: Run R script
       run: Rscript R/run_data_set.R
 
-    - name: Commit and push changes
+    - name: Create changes
       uses: actions/checkout@v3
       with: 
         github_token: ${{ secrets.GH_PAT }}
+    - name:  Commit and push
       run: |
         git config --global user.email ${{ secrets.GIT_EMAIL }}
         git config --global user.name ${{ secrets.GIT_USERNAME }}
