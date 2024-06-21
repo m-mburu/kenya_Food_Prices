@@ -1,0 +1,23 @@
+---
+title: "Kenya Food Prices"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+
+```{r}
+data("iris")
+plot(iris$Sepal.Length, iris$Sepal.Width, col = iris$Species, pch = 18)
+```
+
+
+```{r}
+## Last Run On
+time_run <- paste(format(Sys.time(), "%Y-%m-%d %H:%M:%S"),  Sys.timezone())
+cat("Last Run On: ", time_run)
+
+```
+
