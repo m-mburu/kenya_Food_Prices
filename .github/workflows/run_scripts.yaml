@@ -51,7 +51,7 @@ jobs:
         git config --global user.name ${{ secrets.GIT_USERNAME }}
         
         git add .
-        git commit --allow-empty -m "Trigger Commit"
-        git push
+        git diff --quiet && git diff --staged --quiet || (git commit -m "Automated update" && git push)
+
 
 

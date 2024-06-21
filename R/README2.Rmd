@@ -13,6 +13,11 @@ data("iris")
 plot(iris$Sepal.Length, iris$Sepal.Width, col = iris$Species, pch = 18)
 ```
 
+```{r}
+
+sample <- sample(1:150, sample(1:10, 1))
+iris[sample, ]
+```
 
 ```{r}
 ## Last Run On
