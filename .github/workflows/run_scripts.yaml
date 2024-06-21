@@ -2,7 +2,7 @@ name: R Data Analysis and Commit
 
 on:
   push:
-  branches: [main, master]
+    branches: [main, master]
   schedule:
     - cron: "0 */2 * * *" # Runs at the start of every 2nd hour
 
