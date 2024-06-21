@@ -14,10 +14,6 @@
 # Logs
 *.Rout
 
-# R Markdown intermediate files
-.Rmd
-*_cache/
-*_files/
 
 # R build files
 .Rbuildignore

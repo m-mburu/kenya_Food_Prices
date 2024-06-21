@@ -29,9 +29,6 @@ jobs:
       with:
         r-version: '4.0.4'  # Replace this with your desired R version
 
-    - name: Set up renv
-      uses: r-lib/actions/setup-renv@v2
-
     - name: Install R packages
       run: |
         Rscript -e "install.packages(c('ggplot2','dplyr', 'data.table', 'remotes', 'rmarkdown'), repos = 'http://cran.rstudio.com')"
