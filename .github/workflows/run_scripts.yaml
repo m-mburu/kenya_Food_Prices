@@ -32,14 +32,15 @@ jobs:
       with:
         r-version: '4.0.4'  # Replace this with your desired R version
 
-    # - name: Install R packages
-    #   env:
-    #     GITHUB_PAT: ${{secrets.GH_PAT }}
-      # run: |
-      #   Rscript -e "install.packages(c('rmarkdown'), repos = 'http://cran.rstudio.com')"
-    
+    - name: Install R packages
+      env:
+        GITHUB_PAT: ${{secrets.GH_PAT }}
+      run: |
+        Rscript -e "install.packages(c('ggplot2','dplyr', 'data.table', 'remotes', 'rmarkdown'), repos = 'http://cran.rstudio.com')"
+        Rscript -e "remotes::install_github('dickoa/rhdx', upgrade = 'never' )"
+
     - name: Run R script
-      run: Rscript R/job.R
+      run: Rscript R/run_data_set.R
 
     - name: Commit files
       run: |
@@ -51,9 +52,12 @@ jobs:
           git add .
           git commit -m "automatic updates $date" || echo "Nothing to update"
 
-    - name: Push changes to FINDCov19TrackerData
+    - name: Push updated data
       uses: ad-m/github-push-action@master
       with:
           github_token: ${{ secrets.GH_PAT}}
           branch: main
+
+
+
 

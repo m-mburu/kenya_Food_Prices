@@ -32,26 +32,28 @@ jobs:
       with:
         r-version: '4.0.4'  # Replace this with your desired R version
 
-    - name: Install R packages
-      env:
-        GITHUB_PAT: ${{secrets.GH_PAT }}
-      run: |
-        Rscript -e "install.packages(c('ggplot2','dplyr', 'data.table', 'remotes', 'rmarkdown'), repos = 'http://cran.rstudio.com')"
-        Rscript -e "remotes::install_github('dickoa/rhdx', upgrade = 'never' )"
-
+    # - name: Install R packages
+    #   env:
+    #     GITHUB_PAT: ${{secrets.GH_PAT }}
+      # run: |
+      #   Rscript -e "install.packages(c('rmarkdown'), repos = 'http://cran.rstudio.com')"
+    
     - name: Run R script
-      run: Rscript R/run_data_set.R
+      run: Rscript R/job.R
 
-    - name: Create changes
-      uses: actions/checkout@v3
-      with: 
-        token: ${{ secrets.GH_PAT }}
-    - name:  Commit and push
+    - name: Commit files
       run: |
-        git config --global user.email ${{ secrets.GIT_EMAIL }}
-        git config --global user.name ${{ secrets.GIT_USERNAME }}
-        git add data/* README.md README_files/*
-        git commit -m "Automated data update"
-        git push
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git config pull.rebase false
+          git pull origin main
+          date=$(date +'%Y-%m-%d')
+          git add .
+          git commit -m "automatic updates $date" || echo "Nothing to update"
 
+    - name: Push updated data
+      uses: ad-m/github-push-action@master
+      with:
+          github_token: ${{ secrets.GH_PAT}}
+          branch: main
 
