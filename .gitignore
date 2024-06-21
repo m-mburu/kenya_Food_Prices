@@ -52,5 +52,3 @@ packrat/init.R
 data/*.csv
 data/*.xlsx
 
-# Exclude plots directory
-plots/
