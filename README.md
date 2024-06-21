@@ -1,20 +1,25 @@
-Untitled
+Kenya Food Prices
 ================
+
+- This will be a part of big project I want to do in the future. This is
+  just the beginning at first Iwant to set github actions to run this
+  code and then I will add more code to it.
 
 ``` r
 library(rhdx)
-library(ncdf4) # package for netcdf manipulation
 library(tidyverse)
 library(data.table)
 
 #remotes::install_github("dickoa/rhdx")
 
 set_rhdx_config(hdx_site = "prod")
-save(ke_food_prices, file = "data/ke_food_prices.rda")
+
 ke_food_prices <- pull_dataset("wfp-food-prices-for-kenya") %>% 
     get_resource(1) %>%
     read_resource() %>%
     setDT()
+
+save(ke_food_prices, file = "data/ke_food_prices.rda")
 ```
 
 ``` r
@@ -43,7 +48,11 @@ nmk_counties_maize[, .(mean_price = mean(price)), by = .(date, admin2)] %>%
 
 ``` r
 ## Last Run On
-cat("Last Run On: ", Sys.time())
+time_run <- paste(format(Sys.time(), "%Y-%m-%d %H:%M:%S"),  Sys.timezone())
+cat("Last Run On: ", time_run)
 ```
 
-    ## Last Run On:  1718938115
+    ## Last Run On:  2024-06-21 06:25:30 Africa/Nairobi
+
+- **Thanks to WFP for providing the data on Humanitarian Data Exchange
+  (HDX)**

@@ -17,16 +17,18 @@ library(data.table)
 #remotes::install_github("dickoa/rhdx")
 
 set_rhdx_config(hdx_site = "prod")
-save(ke_food_prices, file = "data/ke_food_prices.rda")
+
 ke_food_prices <- pull_dataset("wfp-food-prices-for-kenya") %>% 
     get_resource(1) %>%
     read_resource() %>%
     setDT()
+
+save(ke_food_prices, file = "data/ke_food_prices.rda")
 ```
 
 
 
-```{r}
+```{r, fig.width=7, fig.height=4.5}
 nairobi <- ke_food_prices[admin2 == "Nairobi" & pricetype == "Wholesale",]
 
 admin2_select <- c("Nairobi", "Mombasa", "Nakuru")
@@ -52,7 +54,11 @@ nmk_counties_maize[, .(mean_price = mean(price)), by = .(date, admin2)] %>%
 
 ```{r}
 ## Last Run On
-cat("Last Run On: ", Sys.time())
-usethis::use_github_action("check-standard")
+time_run <- paste(format(Sys.time(), "%Y-%m-%d %H:%M:%S"),  Sys.timezone())
+cat("Last Run On: ", time_run)
+
 ```
+
+- **Thanks to WFP for providing the data on Humanitarian Data Exchange (HDX)**
+
 
