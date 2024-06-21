@@ -2,38 +2,47 @@ name: R Data Analysis and Commit
 
 on:
   push:
-    branches: [main, master]
+    branches:
+      - main
   schedule:
-    - cron: "0 */2 * * *" # Runs at the start of every 2nd hour
+    - cron: '0 */2 * * *'  # Runs at the start of every 2nd hour
 
 jobs:
   analysis_and_commit:
-    runs-on: ubuntu-22.04 
+    runs-on: ubuntu-22.04
+    env:
+      TZ: "Africa/Nairobi"  # Setting time zone for the job
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Install system dependencies for tidyverse
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libcurl4-openssl-dev libxml2-dev libssl-dev libicu-dev libblas-dev liblapack-dev zlib1g-dev
+    - name: Install system dependencies for tidyverse
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libcurl4-openssl-dev libxml2-dev libssl-dev libicu-dev libblas-dev liblapack-dev zlib1g-dev
 
-      - name: Set up R
-        uses: r-lib/actions/setup-r@v2
-        with:
-          r-version: "4.4.0"
+    - name: Set up Pandoc
+      uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Install R packages
-        run: |
-          Rscript -e "install.packages(c('tidyverse', 'data.table', 'remotes'), repos = 'http://cran.rstudio.com')"
-          Rscript -e "remotes::install_github('dickoa/rhdx')"
+    - name: Set up R
+      uses: r-lib/actions/setup-r@v2
+      with:
+        r-version: '4.0.4'  # Replace this with your desired R version
 
-      - name: Run R script
-        run: Rscript run_data_set.R
+    - name: Set up renv
+      uses: r-lib/actions/setup-renv@v2
 
-      - name: Commit and push changes
-        run: |
-          git config --global user.email ${{ secrets.GIT_EMAIL }}
-          git config --global user.name ${{ secrets.GIT_USERNAME }}
-          git add data/*  # Add the output directory
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Automated data update" and git push)
+    - name: Install R packages
+      run: |
+        Rscript -e "install.packages(c('ggplot2','dplyr', 'data.table', 'remotes', 'rmarkdown'), repos = 'http://cran.rstudio.com')"
+        Rscript -e "remotes::install_github('dickoa/rhdx')"
+
+    - name: Run R script
+      run: Rscript run_data_set.R
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.email ${{ secrets.GIT_EMAIL }}
+        git config --global user.name ${{ secrets.GIT_USERNAME }}
+        git add data/* README.md  # Add the output directory and README.md
+        git diff --quiet && git diff --staged --quiet || (git commit -m "Automated data update" && git push)

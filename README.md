@@ -7,7 +7,8 @@ Kenya Food Prices
 
 ``` r
 library(rhdx)
-library(tidyverse)
+library(ggplot2)
+library(dplyr)
 library(data.table)
 
 #remotes::install_github("dickoa/rhdx")
@@ -52,7 +53,7 @@ time_run <- paste(format(Sys.time(), "%Y-%m-%d %H:%M:%S"),  Sys.timezone())
 cat("Last Run On: ", time_run)
 ```
 
-    ## Last Run On:  2024-06-21 06:25:30 Africa/Nairobi
+    ## Last Run On:  2024-06-21 07:34:11 Africa/Nairobi
 
 - **Thanks to WFP for providing the data on Humanitarian Data Exchange
   (HDX)**
