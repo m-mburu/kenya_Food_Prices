@@ -7,6 +7,9 @@ on:
   schedule:
     - cron: '0 */2 * * *'  # Runs at the start of every 2nd hour
 
+permissions:
+  contents: write
+
 jobs:
   analysis_and_commit:
     runs-on: ubuntu-22.04
@@ -40,10 +43,14 @@ jobs:
       run: Rscript R/run_data_set.R
 
     - name: Commit and push changes
-      env:
-        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+      uses: actions/checkout@v3
+      with: 
+        github_token: ${{ secrets.GH_PAT }}
       run: |
         git config --global user.email ${{ secrets.GIT_EMAIL }}
         git config --global user.name ${{ secrets.GIT_USERNAME }}
-        git add .  # Add the output directory and README.md
-        git diff --quiet && git diff --staged --quiet || (git commit -m "Automated data update" && git push)
+        git add data/* README.md README_files/*
+        git commit -m "Automated data update"
+        git push
+
+
