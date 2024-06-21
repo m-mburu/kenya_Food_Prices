@@ -32,11 +32,11 @@ jobs:
       with:
         r-version: '4.0.4'  # Replace this with your desired R version
 
-    - name: Install R packages
-      env:
-        GITHUB_PAT: ${{secrets.GH_PAT }}
-      run: |
-        Rscript -e "install.packages(c('rmarkdown'), repos = 'http://cran.rstudio.com')"
+    # - name: Install R packages
+    #   env:
+    #     GITHUB_PAT: ${{secrets.GH_PAT }}
+      # run: |
+      #   Rscript -e "install.packages(c('rmarkdown'), repos = 'http://cran.rstudio.com')"
     
     - name: Run R script
       run: Rscript R/job.R
