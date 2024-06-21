@@ -41,17 +41,19 @@ jobs:
     - name: Run R script
       run: Rscript R/job.R
 
-    - name: Create changes
-      uses: actions/checkout@v3
-      with: 
-        token: ${{ secrets.GH_PAT }}
-    - name:  Commit and push
+    - name: Commit files
       run: |
-        git config --global user.email ${{ secrets.GIT_EMAIL }}
-        git config --global user.name ${{ secrets.GIT_USERNAME }}
-        
-        git add .
-        git diff --quiet && git diff --staged --quiet || (git commit -m "Automated update" && git push)
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git config pull.rebase false
+          git pull origin master
+          date=$(date +'%Y-%m-%d')
+          git add .
+          git commit -m "automatic updates $date" || echo "Nothing to update"
 
-
+    - name: Push changes to FINDCov19TrackerData
+      uses: ad-m/github-push-action@master
+      with:
+          github_token: ${{ secrets.GH_PAT}}
+          branch: main
 
