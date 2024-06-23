@@ -53,7 +53,7 @@ time_run <- paste(format(Sys.time(), "%Y-%m-%d %H:%M:%S"),  Sys.timezone())
 cat("Last Run On: ", time_run)
 ```
 
-    ## Last Run On:  2024-06-23 06:21:20 UTC
+    ## Last Run On:  2024-06-23 12:20:33 UTC
 
 - **Thanks to WFP for providing the data on Humanitarian Data Exchange
   (HDX)**
